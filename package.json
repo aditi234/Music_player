@@ -1,0 +1,22 @@
+{
+  "name": "music_player",
+  "version": "1.0.0",
+  "description": "for assignment",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "debug": "ndb server.js"
+  },
+  "author": "Aditi Sahu",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.12",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "ndb": "^1.1.5"
+  }
+}
