@@ -1,6 +1,6 @@
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const AppError = require('../utils/appError');
 const {promisify} = require('util');
 
@@ -34,21 +34,22 @@ const createSendToken = (user, statusCode, res) => {
   };
 
   exports.signup = catchAsync(async (req, res, next) => {
-    const newUser= await User.create(req.body);
+    
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm
+    });
+    const token = signToken(newUser._id);
     res.status(201).json({
-      status: "success",
+      status: 'success',
+      token,
       data: {
-        newUser
+        user: newUser
       }
     });
-    // const newUser = await User.create({
-    //   name: req.body.name,
-    //   email: req.body.email,
-    //   password: req.body.password,
-    //   passwordConfirm: req.body.passwordConfirm
-    // });
-  
-    // createSendToken(newUser, 201, res);
+    createSendToken(newUser, 201, res);
   });
   
   exports.login = catchAsync(async (req, res, next) => {
@@ -64,7 +65,7 @@ const createSendToken = (user, statusCode, res) => {
     if (!user || !(await user.correctPassword(password, user.password))) {
       return next(new AppError('Incorrect email or password', 401));
     }
-  
+    
     // 3) If everything ok, send token to client
     createSendToken(user, 200, res);
   });
