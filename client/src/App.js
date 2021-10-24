@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route
+          {/* <Route
             path="/"
             exact
             component={() => (
@@ -22,9 +22,9 @@ function App() {
             component={() => (
               <Login />
             )}
-          /> 
+          />  */}
           <Route
-            path="/home"
+            path="/"
             exact
             component={() => (
               <Home />
